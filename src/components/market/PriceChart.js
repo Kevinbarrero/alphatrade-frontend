@@ -25,7 +25,7 @@ function ChartComponent({ coin, klinetime }) {
 
     async function fetchData() {
       try {
-        const response = await axios.get(`http://localhost:3000/klines/${coin.toUpperCase()}/${klinetime}/1679486400000`);
+        const response = await axios.get(`http://92.63.105.48:3000/klines/${coin.toUpperCase()}/${klinetime}/1679486400000`);
         const data = response.data
         const transformedData = data.map(obj => ({
           time: (new Date(obj.open_time).getTime() +10800000)/ 1000,

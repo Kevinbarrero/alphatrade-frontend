@@ -5,7 +5,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import { isEmail } from "validator";
-import { Navigate, useNavigate  } from 'react-router-dom';
+import { useNavigate  } from 'react-router-dom';
 
 
 import { register } from "../actions/auth";
