@@ -7,8 +7,11 @@ import { Spinner } from 'react-bootstrap';
 function ChartComponent({ coin, klinetime }) {
   const chartContainer = useRef(null);
   const candlestickSeriesRef = useRef(null);
+  const smaSeriesRef = useRef(null);
   const socketRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
+  const smaPeriod = 20;
+  const [transformedData, setTransformedData] = useState([{ time: 0, open: 0, high: 0, low: 0, close: 0 }])
   useEffect(() => {
     const chart = createChart(chartContainer.current, {
       timeScale: {
@@ -21,11 +24,16 @@ function ChartComponent({ coin, klinetime }) {
         precision: 5,
       },
     });
+
     candlestickSeriesRef.current = chart.addCandlestickSeries();
+    smaSeriesRef.current = chart.addLineSeries({
+      color: '#FFA500',
+    lineWidth: 2,
+    });
 
     async function fetchData() {
       try {
-        const response = await axios.get(`http://92.63.105.48:3000/klines/${coin.toUpperCase()}/${klinetime}/1679486400000`);
+        const response = await axios.get(`http://localhost:3000/klines/${coin.toUpperCase()}/${klinetime}/1680340440000`);
         const data = response.data
         const transformedData = data.map(obj => ({
           time: (new Date(obj.open_time).getTime() +10800000)/ 1000,
@@ -34,8 +42,27 @@ function ChartComponent({ coin, klinetime }) {
           low: parseFloat(obj.low),
           close: parseFloat(obj.close),
         }));
+        setTransformedData(transformedData)
         candlestickSeriesRef.current.setData(transformedData);
-        console.log(transformedData)
+
+        
+        const smaData = [];
+        for (let i = 0; i < transformedData.length; i++) {
+          if (i < smaPeriod - 1) {
+            continue;
+          }
+
+          const sum = transformedData.slice(i - smaPeriod + 1, i + 1).reduce((acc, obj) => acc + obj.close, 0);
+          const average = sum / smaPeriod;
+
+          smaData.push({
+            time: transformedData[i].time,
+            value: average,
+          });
+
+        }
+        smaSeriesRef.current.setData(smaData);
+
         setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -49,13 +76,22 @@ function ChartComponent({ coin, klinetime }) {
       const message = JSON.parse(event.data);
       const candlestick = message.k;
       if (!candlestick.x) {
-        candlestickSeriesRef.current.update({
+        const kline =  {
           time: (new Date(candlestick.t).getTime() + 10800000) / 1000,
           open: parseFloat(candlestick.o),
           high: parseFloat(candlestick.h),
           low: parseFloat(candlestick.l),
           close: parseFloat(candlestick.c),
-        })
+        }
+        setTransformedData([...transformedData, kline,])
+        candlestickSeriesRef.current.update( kline )
+        const lastDataIndex = transformedData.length - 1;
+        const lastData = transformedData[lastDataIndex];
+        const newData = {
+          time: (new Date(candlestick.t).getTime() + 10800000) / 1000,
+          value: lastData.value + (parseFloat(candlestick.c) - parseFloat(lastData.close)) / smaPeriod,
+        };
+        smaSeriesRef.current.update(newData);
       }
 
     };
