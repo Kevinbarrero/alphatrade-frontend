@@ -4,13 +4,13 @@ import Select from 'react-select';
 
 function SearchInput({ onSearchResultChange, onSearchIntervalChange }) {
   const [searchTerm, setSearchTerm] = useState('BTCUSDT');
-  const [setSearchResult] = useState(null);
+  const [searchResult, setSearchResult] = useState(null);
   const [options, setOptions] = useState([]);
   const intervalOpt = ['1m', '5m', '15m', '30m', '1h', '4h'];
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios.get('http://92.63.105.48:3000/coins');
+      const result = await axios.get('http://localhost:3000/coins');
       setOptions(result.data);
     };
 
