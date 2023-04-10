@@ -202,10 +202,11 @@ label {
 #btn-login-main{
     position: absolute;
     right: 10%;
+    top: 10%
 }
 
 #btn-sign-up-main{
     position: absolute;
     right: 2%;
-    margin-left: 15%;
+    top: 10%
 }
