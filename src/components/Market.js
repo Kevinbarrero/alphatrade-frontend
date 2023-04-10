@@ -20,26 +20,29 @@ const Market = () => {
   };
 
   return (
-    <div>
-        
-    <div className="container">
-    <header className="jumbotron"></header>
-    <h2>Live updating chart</h2>
-    <div style={{width:20, padding:20, boxSizing: 'border-box'}}>
-    </div>
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-      
-      <div>
-        <SearchInput
-          onSearchResultChange={handleSearchResultChange}
-          onSearchIntervalChange={handleSearchInterval}
-        />
+    <div className="container-fluid">
+    <div className="row">
+      <div className="col-md-2 bg-light mr-4" style={{ height: "100vh" }}>
+        <h3>Strategies</h3>
+      </div>
+      <div className="col-md-8">
+        <header className="jumbotron"></header>
+        <h2 style={{textAlign:'center'}}>Live updating chart</h2>
+        <div style={{width:20, padding:20, boxSizing: 'border-box'}}>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
+          <div>
+            <SearchInput
+              onSearchResultChange={handleSearchResultChange}
+              onSearchIntervalChange={handleSearchInterval}
+            />
+          </div>
+        </div>
+        <div style={{ marginTop: 50 }}>
+          <ChartComponent coin={searchCoin || "btcusdt"} klinetime={searchInterval || '1m'} />
+        </div>
       </div>
     </div>
-    <div style={{ marginTop: 50 }}>
-      <ChartComponent coin={searchCoin || "btcusdt"} klinetime={searchInterval || '1m'} />
-    </div>
-  </div>
   </div>
   );
 };
