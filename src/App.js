@@ -32,11 +32,11 @@ const App = () => {
   }, [dispatch]);
   return (
     <div>
-      <nav className="navbar navbar-expand navbar-dark bg-dark">
-        <Link to={"/"} className="navbar-brand">
+      <nav className="navbar navbar-expand">
+        <Link to={"/"} className="navbar-brand" id="logo-text">
           AlphaTrade
         </Link>
-        <div className="navbar-nav mr-auto">
+        <div className="navbar-nav mr-auto nav-links">
           {currentUser && (
             <>
               <li className="nav-item">
@@ -60,25 +60,25 @@ const App = () => {
 
         {currentUser ? (
           <div className="navbar-nav ml-auto">
-            
             <li className="nav-item">
-              <a href="/login" className="nav-link" onClick={logOut}>
-                LogOut
-              </a>
+              <div className="form-group"  id="btn-logout">
+                <a href="/login" className="btn btn-primary btn-block btn-gradient-2" onClick={logOut}>Log Out</a>
+              </div>
             </li>
           </div>
         ) : (
           <div className="navbar-nav ml-auto">
-            <li className="nav-item">
-              <Link to={"/login"} className="nav-link">
+            <li className="form-group"  id="btn-login-main">
+              <Link to={"/login"} className="btn btn-primary btn-block btn-gradient">
                 Login
               </Link>
             </li>
 
-            <li className="nav-item">
-              <Link to={"/register"} className="nav-link">
+            <li className="form-group"  id="btn-sign-up-main">
+              <Link to={"/register"} className="btn btn-primary btn-block btn-gradient-2">
                 Sign Up
               </Link>
+
             </li>
           </div>
         )}
