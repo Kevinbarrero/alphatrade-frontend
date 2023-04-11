@@ -125,7 +125,7 @@ label {
     rgba(24, 41, 103, 0.89) 110.59%);
     border-radius: 275px;
     border-color: #BF698D;
-    width: 140px;
+    width: 111px;
     height: 37px;
 }
 
@@ -136,4 +136,81 @@ label {
 .sign-up-form {
     padding-left: 5%;
     padding-top: 1%;
+}
+
+#logo-text{
+    font-style: normal;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 37px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    text-transform: capitalize;
+    background: linear-gradient(180deg, #3DA1CC 0%, #3DA1CC 0.01%, #BC78DB 75%, #810BB8 97.92%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-left: 1%;
+}
+
+.nav-link{
+    position: relative;
+    top: 10%;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 37px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+    text-transform: capitalize;
+    color: #000000;
+}
+
+.navbar-nav.mr-auto.nav-links{
+    position: relative;
+    left: 25%;
+
+}
+.btn.btn-primary.btn-block.btn-gradient-2{
+    background-color: rgba(174, 85, 123, 0.1);
+    border-color: #810BB8;
+    padding: 5px;
+    border-width: 2px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    color: black;
+    width: 111px;
+    height: 37px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    box-sizing: border-box;
+}
+
+.navbar.navbar-expand{
+    position: relative;
+    top: 1%
+}
+
+#btn-logout{
+    position: absolute;
+    right: 2%;
+    top: 15%
+}
+
+#btn-login-main{
+    position: absolute;
+    right: 10%;
+    top: 15%;
+}
+
+#btn-sign-up-main{
+    position: absolute;
+    right: 2%;
+    top: 15%
+}
+
+#link-text{
+    text-decoration: none;
 }

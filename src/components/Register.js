@@ -5,7 +5,7 @@ import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
 import CheckButton from "react-validation/build/button";
 import {isEmail} from "validator";
-import {useNavigate} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 
 import {register} from "../actions/auth";
@@ -173,7 +173,8 @@ const Register = () => {
                                                 validations={[required, vpassword]}
                                             />
                                         </div>
-                                        <p id="already-has-account">Don’t you have account, click here.</p>
+                                        <p id="already-has-account">Don’t you have account,
+                                            <Link to={"/login"} id="link-text"> click here. </Link></p>
                                         <div className="form-group" id="btn-login">
                                             <button className="btn btn-primary btn-block btn-gradient">Sign Up</button>
                                         </div>

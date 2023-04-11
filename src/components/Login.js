@@ -1,6 +1,6 @@
 import React, {useState, useRef} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {Navigate, useNavigate} from 'react-router-dom';
+import {Link, Navigate, useNavigate} from 'react-router-dom';
 
 import Form from "react-validation/build/form";
 import Input from "react-validation/build/input";
@@ -108,7 +108,8 @@ const Login = (props) => {
                                         validations={[required]}
                                     />
                                 </div>
-                                <p id="already-has-account">If You don’t have account, click here.</p>
+                                <p id="already-has-account">If You don’t have account,
+                                    <Link to={"/register"} id="link-text"> click here. </Link> </p>
                                 <div className="form-group" id="btn-login">
                                     <button className="btn btn-primary btn-block btn-gradient" disabled={loading}>
                                         {loading && (
