@@ -20,14 +20,12 @@ function SearchInput({ onSearchResultChange, onSearchIntervalChange }) {
   const handleInputChange = (selectedOption) => {
     setSearchTerm(selectedOption.value);
     setSearchResult(selectedOption.value);
-    // Call the onSearchResultChange callback function with the updated search result
     if (onSearchResultChange) {
       onSearchResultChange(selectedOption.value);
     }
   };
 
   const handleIntervalChange = (selectedOption) => {
-    // Call the onSearchIntervalChange callback function with the updated interval
     if (onSearchIntervalChange) {
       onSearchIntervalChange(selectedOption.value);
     }

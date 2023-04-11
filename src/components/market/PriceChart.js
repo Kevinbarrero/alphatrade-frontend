@@ -4,13 +4,12 @@ import axios from 'axios';
 import { w3cwebsocket } from 'websocket';
 import { Spinner } from 'react-bootstrap';
 
-function ChartComponent({ coin, klinetime, indicators = [] }) {
+function ChartComponent({ coin, klinetime}) {
   const chartContainer = useRef(null);
   const candlestickSeriesRef = useRef(null);
   const areaSeriesRef = useRef(null);
   const socketRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [transformedData, setTransformedData] = useState([{ time: 0, open: 0, high: 0, low: 0, close: 0 }])
   useEffect(() => {
     const chart = createChart(chartContainer.current, {
       timeScale: {
@@ -74,18 +73,17 @@ function ChartComponent({ coin, klinetime, indicators = [] }) {
           low: parseFloat(obj.low),
           close: parseFloat(obj.close),
         }));
-        transformedData = transformedData.map(point => {
-          if (point.time !== (1681146120000 + 10800000) / 1000 ){
-            return point
-          }
-          return { ...point, color: 'orange', wickColor: 'orange'};
-        })
-        setTransformedData(transformedData)
         candlestickSeriesRef.current.setData(transformedData);
-        const lineData = transformedData.map(datapoint => ({
+        let lineData = transformedData.map(datapoint => ({
           time: datapoint.time,
           value: (datapoint.close + datapoint.open) / 2,
         }));
+        lineData = lineData.map(point => {
+          if (point.time !== (1681146120000 + 10800000) / 1000 ){
+            return point
+          }
+          return { ...point, topColor: 'orange', bottomColor:'orange'};
+        })
         areaSeriesRef.current.setData(lineData)
         setIsLoading(false);
       } catch (error) {
@@ -109,7 +107,6 @@ function ChartComponent({ coin, klinetime, indicators = [] }) {
           low: parseFloat(candlestick.l),
           close: parseFloat(candlestick.c),
         }
-        setTransformedData([...transformedData, kline,])
         candlestickSeriesRef.current.update( kline )
         const areaData = {
           time: kline.time,
