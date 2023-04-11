@@ -1,18 +1,20 @@
 import axios from "axios";
-import authHeader from "./auth-header";
+import authHeader from "./authHeader";
 
 const API_URL = "http://localhost:3000/";
 
-const getPublicContent = () => {
-  return axios.get(API_URL + "all");
-};
-
-const getUserBoard = () => {
-  return axios.get(API_URL + "user", { headers: authHeader() });
-};
-
-export default {
-  getPublicContent,
-  getUserBoard
+export const getStrategies = () => {
+  return axios.get(API_URL + "getStrategies", {headers:authHeader()});
+}
+export const delStrategy = (strategy) => {
+  return axios.post(API_URL + "deleteStrategy", {strategy},{headers: authHeader()})
+}
+export const postStrategy = (name, indicators, buyConditions, sellConditions) => {
+  return axios.post(API_URL + "saveStrategy", {
+    name,
+    indicators,
+    buyConditions,
+    sellConditions
+  }, { headers: authHeader() });
 };
 
