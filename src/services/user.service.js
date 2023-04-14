@@ -9,6 +9,7 @@ export const getStrategies = () => {
 export const delStrategy = (strategy) => {
   return axios.post(API_URL + "deleteStrategy", {strategy},{headers: authHeader()})
 }
+
 export const postStrategy = (name, indicators, buyConditions, sellConditions) => {
   return axios.post(API_URL + "saveStrategy", {
     name,
