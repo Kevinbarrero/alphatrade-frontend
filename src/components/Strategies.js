@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
-import { useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import StrategyConfig from "./strategies/StrategyConfig";
 import { getStrategies } from "../services/user.service";
 import Table from "react-bootstrap/Table";
-import { delStrategy } from "../services/user.service";
+import { delStrategy} from "../services/user.service";
 const Profile = () => {
   const { user: currentUser } = useSelector((state) => state.auth);
   const [strategies, setStrategies] = useState([]);
@@ -12,16 +12,16 @@ const Profile = () => {
   const [isFormOpen, setIsFormOpen] = useState(false);
 
   const strategiesChange = (strategy) => {
-    setStrategies([...strategies, strategy])
-  }
+    setStrategies([...strategies, strategy]);
+  };
   const handleSaveStrategy = () => {
     setIsFormOpen(false);
   };
   const handleDeleteStrategy = (value) => {
-    const s = strategies.splice(value,1)
-    setStrategies([...strategies])
-    delStrategy(s[0])
-  }
+    const s = strategies.splice(value, 1);
+    setStrategies([...strategies]);
+    delStrategy(s[0]);
+  };
   const loadStrategies = async () => {
     try {
       const response = await getStrategies();
@@ -34,36 +34,40 @@ const Profile = () => {
     loadStrategies();
   }, []);
 
-
   if (!currentUser) {
     return <Navigate to="/login" />;
   }
 
-
   return (
-    <div className="container">
+    <div className="container-fluid">
       <header className="jumbotron">
         <h3>Custom Strategies</h3>
-        {!isFormOpen && (
-        <button onClick={() => setIsFormOpen(true)}>Create new strategy</button>
-      )}
-      {isFormOpen && (
-        <>
-          <StrategyConfig
-            onSave={handleSaveStrategy}
-            onStrategiesChange={strategiesChange}
-          />
-          <button
-            onClick={() => setIsFormOpen(false)}
-            type="button"
-            className="btn btn-warning"
-          >
-            Close Form
-          </button>
-        </>
-      )}
+       
       </header>
-      <div>
+      <div className="row">
+      <div className="col-md-2 bg-light mr-4" style={{ height: "100vh" }}>
+      {!isFormOpen && (
+          <button onClick={() => setIsFormOpen(true)}>
+            Create new strategy
+          </button>
+        )}
+        {isFormOpen && (
+          <>
+            <StrategyConfig
+              onSave={handleSaveStrategy}
+              onStrategiesChange={strategiesChange}
+            />
+            <button
+              onClick={() => setIsFormOpen(false)}
+              type="button"
+              className="btn btn-warning"
+            >
+              Cancel
+            </button>
+          </>
+        )}
+      </div>
+      <div className="col-md-8">
         <Table striped bordered hover className="table table-dark">
           <thead className="thead-dark">
             <tr>
@@ -71,7 +75,7 @@ const Profile = () => {
               <th>Indicators</th>
               <th>Buy Conditions</th>
               <th>Sell Conditions</th>
-              <th></th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -96,14 +100,16 @@ const Profile = () => {
                   ))}
                 </td>
                 <td>
-                  <button onClick={() => handleDeleteStrategy(index)}>Delete</button>
+                  <button onClick={() => handleDeleteStrategy(index)}>
+                    Delete
+                  </button>
                 </td>
               </tr>
             ))}
           </tbody>
         </Table>
+        </div>
       </div>
-      
     </div>
   );
 };
