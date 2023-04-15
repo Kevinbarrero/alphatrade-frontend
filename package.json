@@ -21,6 +21,7 @@
     "react-scripts": "5.0.1",
     "react-select": "^5.7.2",
     "react-validation": "^3.0.7",
+    "recharts": "^2.5.0",
     "redux": "^4.2.1",
     "redux-thunk": "^2.4.2",
     "technicalindicators": "^3.1.0",

@@ -3,10 +3,14 @@ import { createChart, CrosshairMode, LineStyle } from "lightweight-charts";
 import axios from "axios";
 import { w3cwebsocket } from "websocket";
 import { Spinner } from "react-bootstrap";
-import { findEntryPoints } from "../../utils/FindEntryPoints";
-const TechnicalIndicators = require("technicalindicators");
+import { findEntryPoints, generateIndicators } from "../../utils/Market";
 
-function ChartComponent({ coin, klinetime, onHandleStrategyBacktest, onBacktestDataChange}) {
+function ChartComponent({
+  coin,
+  klinetime,
+  onHandleStrategyBacktest,
+  onBacktestDataChange,
+}) {
   const chartContainer = useRef(null);
   const candlestickSeriesRef = useRef(null);
   const areaSeriesRef = useRef(null);
@@ -64,15 +68,21 @@ function ChartComponent({ coin, klinetime, onHandleStrategyBacktest, onBacktestD
       topColor: "rgba(56, 33, 110,0.6)",
       bottomColor: "rgba(56, 33, 110, 0.1)",
     });
-    let orders  = {
-      short: { open: [], close: [], profit: [] },
-      long: { open: [], close: [], profit: [] },
-    }
-
+    let orders = {
+      short: {
+        open: { price: [], time: [] },
+        close: { price: [], time: [] },
+        profit: [],
+      },
+      long: {
+        open: { price: [], time: [] },
+        close: { price: [], time: [] },
+        profit: [],
+      },
+    };
 
     async function fetchData() {
       try {
-        let indicatorsDict = {};
         const response = await axios.get(
           `http://localhost:3000/klines/${coin.toUpperCase()}/${klinetime}/1680340440000`
         );
@@ -92,53 +102,51 @@ function ChartComponent({ coin, klinetime, onHandleStrategyBacktest, onBacktestD
         if (onHandleStrategyBacktest) {
           //creating indicators
           let closeprice = transformedData.map((obj) => obj.close);
-          for (const indicator of onHandleStrategyBacktest.indicators) {
-            if (indicator.id === "ma") {
-              // Create a moving average indicator with the specified value
-              const maIndicator = new TechnicalIndicators.SMA({
-                period: indicator.value,
-                values: closeprice,
-              });
-              //maIndicators.push(maIndicator);
-              indicatorsDict["ma" + indicator.value] = maIndicator;
-            } else if (indicator.id === "rsi") {
-              // Create a RSI indicator with the specified value
-              const rsiIndicator = new TechnicalIndicators.RSI({
-                period: indicator.value,
-                values: closeprice,
-              });
-              indicatorsDict["rsi" + indicator.value] = rsiIndicator;
-              //rsiIndicators.push(rsiIndicator);
-            } else if (indicator.id === "ema") {
-              const emaIndicator = new TechnicalIndicators.EMA({
-                period: indicator.value,
-                values: closeprice,
-              });
-              //emaIndicators.push(emaIndicator)
-              indicatorsDict["ema" + indicator.value] = emaIndicator;
-            }
-          }
+          const indicatorsDict = generateIndicators(
+            onHandleStrategyBacktest.indicators,
+            closeprice
+          );
+
           let buyPoints = findEntryPoints(
             onHandleStrategyBacktest.buyConditions,
             indicatorsDict,
             transformedData
           );
+
           let sellPoints = findEntryPoints(
             onHandleStrategyBacktest.sellConditions,
             indicatorsDict,
             transformedData
           );
+          console.log("indicatorsDict", indicatorsDict);
+          console.log(buyPoints);
           //only unique values for sellpoints and buypoints
-          buyPoints = buyPoints.filter(
-            (item, index) =>
-              buyPoints.indexOf(item) !== index &&
-              buyPoints.lastIndexOf(item) === index
-          );
-          sellPoints = sellPoints.filter(
-            (item, index) =>
-              sellPoints.indexOf(item) !== index &&
-              sellPoints.lastIndexOf(item) === index
-          );
+          if (
+            (buyPoints.filter(
+              (item, index) =>
+                buyPoints.indexOf(item) !== index &&
+                buyPoints.lastIndexOf(item) === index
+            ).length !==
+              0) |
+            (sellPoints.filter(
+              (item, index) =>
+                sellPoints.indexOf(item) !== index &&
+                sellPoints.lastIndexOf(item) === index
+            ).length !==
+              0)
+          ) {
+            buyPoints = buyPoints.filter(
+              (item, index) =>
+                buyPoints.indexOf(item) !== index &&
+                buyPoints.lastIndexOf(item) === index
+            );
+            sellPoints = sellPoints.filter(
+              (item, index) =>
+                sellPoints.indexOf(item) !== index &&
+                sellPoints.lastIndexOf(item) === index
+            );
+          }
+
           let isShortOrderOpen = false;
           let isLongOrderOpen = false;
 
@@ -146,23 +154,26 @@ function ChartComponent({ coin, klinetime, onHandleStrategyBacktest, onBacktestD
             if (buyPoints.includes(point.time) && !isLongOrderOpen) {
               isShortOrderOpen = false;
               isLongOrderOpen = true;
-              if (orders["short"]["open"].length > 0) {
-                orders["short"]["close"].push(point.value);
+              if (orders["short"]["open"]["price"].length > 0) {
+                orders["short"]["close"]["price"].push(point.value);
+                orders["short"]["close"]["time"].push(point.time);
               }
-              orders["long"]["open"].push(point.value);
+              orders["long"]["open"]["price"].push(point.value);
+              orders["long"]["open"]["time"].push(point.time);
               return {
                 ...point,
                 topColor: "rgba(39, 223, 13, 0.8)",
                 bottomColor: "rgba(39, 223, 13, 0.8)",
               };
             }
-            //show sell points
             if (sellPoints.includes(point.time) && !isShortOrderOpen) {
               isShortOrderOpen = true;
               isLongOrderOpen = false;
-              orders["short"]["open"].push(point.value);
-              if (orders["long"]["open"].length > 0) {
-                orders["long"]["close"].push(point.value);
+              orders["short"]["open"]["price"].push(point.value);
+              orders["short"]["open"]["time"].push(point.time);
+              if (orders["long"]["open"]["price"].length > 0) {
+                orders["long"]["close"]["price"].push(point.value);
+                orders["long"]["close"]["time"].push(point.time);
               }
               return {
                 ...point,
@@ -174,22 +185,22 @@ function ChartComponent({ coin, klinetime, onHandleStrategyBacktest, onBacktestD
             return point;
           });
 
-          for (let i = 0; i < orders["short"]["close"].length; i++) {
-            const openPrice = orders["short"]["open"][i];
-            const closePrice = orders["short"]["close"][i];
+          for (let i = 0; i < orders["short"]["close"]["price"].length; i++) {
+            const openPrice = orders["short"]["open"]["price"][i];
+            const closePrice = orders["short"]["close"]["price"][i];
             const percentageDistance =
               ((openPrice - closePrice) / closePrice) * 100;
             orders["short"]["profit"][i] = percentageDistance;
           }
 
-          for (let i = 0; i < orders["long"]["close"].length; i++) {
-            const openPrice = orders["long"]["open"][i];
-            const closePrice = orders["long"]["close"][i];
+          for (let i = 0; i < orders["long"]["close"]["price"].length; i++) {
+            const openPrice = orders["long"]["open"]["price"][i];
+            const closePrice = orders["long"]["close"]["price"][i];
             const percentageDistance =
               ((closePrice - openPrice) / openPrice) * 100;
             orders["long"]["profit"][i] = percentageDistance;
           }
-          onBacktestDataChange(orders)
+          onBacktestDataChange(orders);
         }
         areaSeriesRef.current.setData(lineData);
         setIsLoading(false);

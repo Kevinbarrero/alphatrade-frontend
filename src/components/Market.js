@@ -1,10 +1,63 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback} from "react";
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ChartComponent from "./market/PriceChart";
 import SearchInput from "./market/InputSelector";
 import { getStrategies } from "../services/user.service";
 import Table from "react-bootstrap/Table";
+import { renderActiveShape } from "../utils/Market";
+import {
+  PieChart, Pie,
+  AreaChart,
+  Area,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Sector 
+} from "recharts";
+
+function generateComulativeData(data) {
+  const combinedData = [
+    ...data.short.profit.map((p, i) => ({
+      time: new Date(data.short.open.time[i] * 1000 - 10800000).toLocaleString(),
+      profit: p,
+    })),
+    ...data.long.profit.map((p, i) => ({
+      time: new Date(data.long.open.time[i] * 1000 - 10800000).toLocaleString(),
+      profit: p,
+    })),
+  ].sort((a, b) => a.time - b.time);
+
+  // Calculate the global profit sum by accumulating the profit values
+  const globalProfitSum = combinedData.reduce((sum, p) => sum + p.profit, 0);
+
+  // Add a cumulative profit property to each data point
+  let cumulativeProfit = 0;
+  const dataWithCumulativeProfit = combinedData.map(({ time, profit }) => {
+    cumulativeProfit += profit;
+    return {
+      time,
+      profit,
+      cumulativeProfit: parseFloat(cumulativeProfit.toFixed(3)),
+    };
+  });
+  return dataWithCumulativeProfit;
+}
+
+function classifyOrders(data) {
+  const shortGoodOrders = data.short.profit.filter((p) => p > 0).length;
+  const shortBadOrders = data.short.profit.filter((p) => p < 0).length;
+  const longGoodOrders = data.long.profit.filter((p) => p > 0).length;
+  const longBadOrders = data.long.profit.filter((p) => p < 0).length;
+  return [
+    { name: "Short Good", value: shortGoodOrders },
+    { name: "Short Bad", value: shortBadOrders },
+    { name: "Long Good", value: longGoodOrders },
+    { name: "Long Bad", value: longBadOrders },
+  ];
+}
 
 const Market = () => {
   const { user: currentUser } = useSelector((state) => state.auth);
@@ -13,6 +66,13 @@ const Market = () => {
   const [strategies, setStrategies] = useState([]);
   const [strategyBacktest, setStrategyBacktest] = useState(null);
   const [backtestData, setBacktestData] = useState(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const onPieEnter = useCallback(
+    (_, index) => {
+      setActiveIndex(index);
+    },
+    [setActiveIndex]
+  );
 
   const loadStrategies = async () => {
     try {
@@ -41,8 +101,8 @@ const Market = () => {
   };
   const handleBacktestDataChange = (backtest) => {
     setBacktestData(backtest);
+    console.log("orders data: ", backtest);
   };
-
   return (
     <div className="container-fluid">
       <div className="row">
@@ -103,45 +163,50 @@ const Market = () => {
             />
           </div>
 
-          {backtestData && (
+          {backtestData && backtestData.short.profit.length !== 0 && (
             <>
-              <h6>
-                Global Profit Sum: {" "}
-                {(backtestData.short.profit.reduce(
-                  (acc, curr) => acc + curr,
-                  0
-                ) +
-                  backtestData.long.profit.reduce((acc, curr) => acc + curr, 0)).toFixed(3)}
-                  %
-              </h6>
-              <table className="table table-bordered table-striped table-hover">
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Open</th>
-                    <th>Close</th>
-                    <th>Profit</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {backtestData.short.close.map((openPrice, index) => (
-                    <tr key={index}>
-                      <td>Short</td>
-                      <td>{backtestData.short.open[index].toFixed(3)}</td>
-                      <td>{openPrice.toFixed(3)}</td>
-                      <td>{backtestData.short.profit[index].toFixed(3)} %</td>
-                    </tr>
-                  ))}
-                  {backtestData.long.close.map((openPrice, index) => (
-                    <tr key={index}>
-                      <td>Long</td>
-                      <td>{backtestData.long.close[index].toFixed(3)}</td>
-                      <td>{openPrice.toFixed(3)}</td>
-                      <td>{backtestData.long.profit[index].toFixed(3)} %</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+              <div style={{ marginTop: 40 }}>
+                <h4 style={{ textAlign: "center" }}>
+                  Global Profit Analisys %
+                </h4>
+                <AreaChart
+                  width={1200}
+                  height={400}
+                  data={generateComulativeData(backtestData)}
+                >
+                  <XAxis dataKey="time" />
+                  <YAxis />
+                  <Tooltip />
+                  <Area
+                    type="monotone"
+                    dataKey="cumulativeProfit"
+                    stroke="#8884d8"
+                    fill="#8884d8"
+                  />
+                </AreaChart>
+
+                
+              </div>
+              
+              <div style={{alignItems:'center', justifyContent:'center', display:'flex', marginTop:30}}>
+              <h4 style={{ textAlign: "center" }}>
+                  Short | long Success Rate
+                </h4>
+              <PieChart width={600} height={600}>
+                  <Pie
+                    activeIndex={activeIndex}
+                    activeShape={renderActiveShape}
+                    data={classifyOrders(backtestData)}
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={80}
+                    outerRadius={110}
+                    fill="#8884d8"
+                    dataKey="value"
+                    onMouseEnter={onPieEnter}
+                  />
+                </PieChart>
+              </div>
             </>
           )}
         </div>
