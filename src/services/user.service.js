@@ -1,7 +1,7 @@
 import axios from "axios";
 import authHeader from "./authHeader";
 
-const API_URL = "http://92.63.105.48:3001/";
+const API_URL = "http://92.63.105.48:3000/";
 
 export const getStrategies = () => {
   return axios.get(API_URL + "getStrategies", {headers:authHeader()});
