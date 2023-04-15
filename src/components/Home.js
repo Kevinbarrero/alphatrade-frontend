@@ -9,7 +9,7 @@ const Home = () => {
       </header>
       <body>
         <h1>Description</h1>
-        <text>please add project descrition here, and some styles</text>
+        <h4>please add project descrition here, and some styles</h4>
       </body>
     </div>
   );
