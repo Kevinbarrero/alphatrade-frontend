@@ -10,7 +10,7 @@ function SearchInput({ onSearchResultChange, onSearchIntervalChange }) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const result = await axios.get('http://92.63.105.48:3000/coins');
+      const result = await axios.get('http://158.160.12.75:3000/coins');
       setOptions(result.data);
     };
 
