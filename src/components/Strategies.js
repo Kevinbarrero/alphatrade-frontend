@@ -4,8 +4,8 @@ import { useSelector } from "react-redux";
 import StrategyConfig from "./strategies/StrategyConfig";
 import { getStrategies } from "../services/user.service";
 import Table from "react-bootstrap/Table";
-import { delStrategy} from "../services/user.service";
-const Profile = () => {
+import { delStrategy } from "../services/user.service";
+const Strategies = () => {
   const { user: currentUser } = useSelector((state) => state.auth);
   const [strategies, setStrategies] = useState([]);
 
@@ -42,76 +42,76 @@ const Profile = () => {
     <div className="container-fluid">
       <header className="jumbotron">
         <h3>Custom Strategies</h3>
-       
+
       </header>
       <div className="row">
-      <div className="col-md-2 bg-light mr-4" style={{ height: "100vh" }}>
-      {!isFormOpen && (
-          <button onClick={() => setIsFormOpen(true)}>
-            Create new strategy
-          </button>
-        )}
-        {isFormOpen && (
-          <>
-            <StrategyConfig
-              onSave={handleSaveStrategy}
-              onStrategiesChange={strategiesChange}
-            />
-            <button
-              onClick={() => setIsFormOpen(false)}
-              type="button"
-              className="btn btn-warning"
-            >
-              Cancel
+        <div className="col-md-2 bg-light mr-4" style={{ height: "100vh" }}>
+          {!isFormOpen && (
+            <button onClick={() => setIsFormOpen(true)}>
+              Create new strategy
             </button>
-          </>
-        )}
-      </div>
-      <div className="col-md-8">
-        <Table striped bordered hover className="table table-dark">
-          <thead className="thead-dark">
-            <tr>
-              <th>Name</th>
-              <th>Indicators</th>
-              <th>Buy Conditions</th>
-              <th>Sell Conditions</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {strategies.map((strategy, index) => (
-              <tr key={index}>
-                <td>{strategy.name}</td>
-                <td>
-                  {strategy.indicators.map((indicator, index) => (
-                    <div key={index}>
-                      {indicator.id}: {indicator.value}
-                    </div>
-                  ))}
-                </td>
-                <td>
-                  {strategy.buyConditions.map((con, index) => (
-                    <div key={index}>{con}</div>
-                  ))}
-                </td>
-                <td>
-                  {strategy.sellConditions.map((con, index) => (
-                    <div key={index}>{con}</div>
-                  ))}
-                </td>
-                <td>
-                  <button onClick={() => handleDeleteStrategy(index)}>
-                    Delete
-                  </button>
-                </td>
+          )}
+          {isFormOpen && (
+            <>
+              <StrategyConfig
+                onSave={handleSaveStrategy}
+                onStrategiesChange={strategiesChange}
+              />
+              <button
+                onClick={() => setIsFormOpen(false)}
+                type="button"
+                className="btn btn-warning"
+              >
+                Cancel
+              </button>
+            </>
+          )}
+        </div>
+        <div className="col-md-8">
+          <Table striped bordered hover className="table table-dark">
+            <thead className="thead-dark">
+              <tr>
+                <th>Name</th>
+                <th>Indicators</th>
+                <th>Buy Conditions</th>
+                <th>Sell Conditions</th>
+                <th>Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </Table>
+            </thead>
+            <tbody>
+              {strategies.map((strategy, index) => (
+                <tr key={index}>
+                  <td>{strategy.name}</td>
+                  <td>
+                    {strategy.indicators.map((indicator, index) => (
+                      <div key={index}>
+                        {indicator.id}: {indicator.value}
+                      </div>
+                    ))}
+                  </td>
+                  <td>
+                    {strategy.buyConditions.map((con, index) => (
+                      <div key={index}>{con}</div>
+                    ))}
+                  </td>
+                  <td>
+                    {strategy.sellConditions.map((con, index) => (
+                      <div key={index}>{con}</div>
+                    ))}
+                  </td>
+                  <td>
+                    <button onClick={() => handleDeleteStrategy(index)}>
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </Table>
         </div>
       </div>
     </div>
   );
 };
 
-export default Profile;
+export default Strategies;
