@@ -3,7 +3,7 @@ import axios from "axios";
 const API_URL = "http://158.160.12.75:3000/";
 
 const register = (firstname, lastname, email, password) => {
-  
+
   return axios.post(API_URL + "register", {
     firstname,
     lastname,
@@ -19,7 +19,6 @@ const login = (email, password) => {
       password,
     })
     .then((response) => {
-      console.log(response.data)
       if (response.data.token) {
         localStorage.setItem("user", JSON.stringify(response.data));
       }
@@ -28,7 +27,10 @@ const login = (email, password) => {
     });
 };
 
-const logout = () => {
+const logout = async () => {
+  //const user = await JSON.parse(localStorage.getItem('user'))
+  // console.log('user unlogged: ')
+  //await axios.post(API_URL + "logout", {});
   localStorage.removeItem("user");
 };
 

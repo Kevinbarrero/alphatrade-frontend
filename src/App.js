@@ -15,6 +15,7 @@ import Market from "./components/Market";
 import { logout } from "./actions/auth";
 import { clearMessage } from "./actions/message";
 
+
 const App = () => {
   const { user: currentUser } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ const App = () => {
   }, [dispatch, location]);
 
   const logOut = useCallback(() => {
+    //console.log('navbar: ', localStorage.getItem('user'))
     dispatch(logout());
   }, [dispatch]);
   return (
@@ -61,20 +63,20 @@ const App = () => {
         {currentUser ? (
           <div className="navbar-nav ml-auto">
             <li className="nav-item">
-              <div className="form-group"  id="btn-logout">
+              <div className="form-group" id="btn-logout">
                 <a href="/login" className="btn btn-primary btn-block btn-gradient-2" onClick={logOut}>Log Out</a>
               </div>
             </li>
           </div>
         ) : (
           <div className="navbar-nav ml-auto">
-            <li className="form-group"  id="btn-login-main">
+            <li className="form-group" id="btn-login-main">
               <Link to={"/login"} className="btn btn-primary btn-block btn-gradient">
                 Login
               </Link>
             </li>
 
-            <li className="form-group"  id="btn-sign-up-main">
+            <li className="form-group" id="btn-sign-up-main">
               <Link to={"/register"} className="btn btn-primary btn-block btn-gradient-2">
                 Sign Up
               </Link>
@@ -92,7 +94,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/strategies" element={<Strategies />} />
-          <Route path="/market" element={<Market/>} />
+          <Route path="/market" element={<Market />} />
         </Routes>
       </div>
     </div>
