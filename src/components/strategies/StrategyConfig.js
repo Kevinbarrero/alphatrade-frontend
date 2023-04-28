@@ -89,8 +89,12 @@ function StrategyConfig({ onSave, onStrategiesChange }) {
       <Form>
         <Form.Group>
           <Form.Label>Strategy Name:</Form.Label>
-          <Form.Control type="text" value={name} onChange={handleNameChange} style={{ width: '90%' }} />
-
+          <Form.Control
+            type="text"
+            value={name}
+            onChange={handleNameChange}
+            style={{ width: "90%" }}
+          />
         </Form.Group>
 
         <Form.Group>
@@ -103,7 +107,8 @@ function StrategyConfig({ onSave, onStrategiesChange }) {
                   as="select"
                   name="id"
                   value={indicator.id}
-                  onChange={(event) => handleIndicatorChange(index, event)} style={{ width: '90%' }}
+                  onChange={(event) => handleIndicatorChange(index, event)}
+                  style={{ width: "90%" }}
                 >
                   <option value="">Select an indicator</option>
                   <option value="ma">Moving Average</option>
@@ -124,7 +129,8 @@ function StrategyConfig({ onSave, onStrategiesChange }) {
                     if (!regex.test(event.key)) {
                       event.preventDefault();
                     }
-                  }} style={{ width: '90%' }}
+                  }}
+                  style={{ width: "90%" }}
                 />
               </Form.Group>
               <Button
@@ -154,7 +160,8 @@ function StrategyConfig({ onSave, onStrategiesChange }) {
                 <Form.Control
                   type="text"
                   value={condition}
-                  onChange={(event) => handleBuyConditionChange(index, event)} style={{ width: '90%' }}
+                  onChange={(event) => handleBuyConditionChange(index, event)}
+                  style={{ width: "90%" }}
                 />
               </Form.Group>
               <Button
@@ -179,7 +186,8 @@ function StrategyConfig({ onSave, onStrategiesChange }) {
                 <Form.Control
                   type="text"
                   value={condition}
-                  onChange={(event) => handleSellConditionChange(index, event)} style={{ width: '90%' }}
+                  onChange={(event) => handleSellConditionChange(index, event)}
+                  style={{ width: "90%" }}
                 />
               </Form.Group>
               <Button

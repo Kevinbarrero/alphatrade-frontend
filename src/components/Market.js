@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback} from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ChartComponent from "./market/PriceChart";
@@ -7,42 +7,41 @@ import { getStrategies } from "../services/user.service";
 import Table from "react-bootstrap/Table";
 import { renderActiveShape } from "../utils/Market";
 import {
-  PieChart, Pie,
+  PieChart,
+  Pie,
   AreaChart,
   Area,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
-  ResponsiveContainer,
-  Sector 
 } from "recharts";
 
 function generateComulativeData(data) {
   const combinedData = [
     ...data.short.profit.map((p, i) => ({
-      time: new Date(data.short.open.time[i] * 1000 - 10800000).toLocaleString(),
+      time: new Date(data.short.open.time[i] * 1000 - 10800000),
       profit: p,
     })),
     ...data.long.profit.map((p, i) => ({
-      time: new Date(data.long.open.time[i] * 1000 - 10800000).toLocaleString(),
+      time: new Date(data.long.open.time[i] * 1000 - 10800000),
       profit: p,
     })),
-  ].sort((a, b) => a.time - b.time);
+  ];
 
-  // Calculate the global profit sum by accumulating the profit values
-  const globalProfitSum = combinedData.reduce((sum, p) => sum + p.profit, 0);
+  // Sort the combinedData array based on the time property in ascending order
+  combinedData.sort((a, b) => a.time - b.time);
 
   // Add a cumulative profit property to each data point
   let cumulativeProfit = 0;
   const dataWithCumulativeProfit = combinedData.map(({ time, profit }) => {
     cumulativeProfit += profit;
     return {
-      time,
+      time: time.toLocaleString(),
       profit,
       cumulativeProfit: parseFloat(cumulativeProfit.toFixed(3)),
     };
   });
+
   return dataWithCumulativeProfit;
 }
 
@@ -184,15 +183,20 @@ const Market = () => {
                     fill="#8884d8"
                   />
                 </AreaChart>
-
-                
               </div>
-              
-              <div style={{alignItems:'center', justifyContent:'center', display:'flex', marginTop:30}}>
-              <h4 style={{ textAlign: "center" }}>
+
+              <div
+                style={{
+                  alignItems: "center",
+                  justifyContent: "center",
+                  display: "flex",
+                  marginTop: 30,
+                }}
+              >
+                <h4 style={{ textAlign: "center" }}>
                   Short | long Success Rate
                 </h4>
-              <PieChart width={600} height={600}>
+                <PieChart width={600} height={600}>
                   <Pie
                     activeIndex={activeIndex}
                     activeShape={renderActiveShape}
