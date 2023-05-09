@@ -214,3 +214,42 @@ label {
 #link-text{
     text-decoration: none;
 }
+
+#profile-container{
+    margin-left: 25%;
+}
+
+.profile-update-form {
+    padding-top: 1%;
+    padding-left: 5%
+}
+
+.dropdown{
+    position: relative;
+    margin-left: 4%;
+    margin-bottom: 35%;
+}
+
+#status{
+    background: #FFFFFF;
+    border: 3px solid #B7B7B7;
+    height: 45px;
+    width: 330px;
+    border-radius: 0 !important;
+}
+
+.dropdown-value {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+}
+
+.profile-update-buttons{
+    margin-left: 17%;
+    margin-bottom: 10%;
+}
+
+#profile-update-submit{
+    margin-right: 5%;
+}
