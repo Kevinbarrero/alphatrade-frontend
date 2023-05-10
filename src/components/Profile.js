@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateProfile } from "../services/user.service";
 import { Navigate } from "react-router-dom";
@@ -37,42 +37,53 @@ const Profile = () => {
   }
 
   return (
-    <div className="container">
-      <header className="jumbotron">
-        <h3>Profile</h3>
-      </header>
+    <div className="container" id="profile-container">
+      <div className="row flex-sm-nowrap align-items-center">
+        <div className="col-6 login-image-block">
+          <img
+              src="../images/profile_info.png"
+              alt="login-img"
+              className="login-img-card"
+          />
+        </div>
+        <div className="col-6 login-form-block">
+          <div className="card card-container">
+            <p id="welcome">Profile</p>
       {!editing && (
         <div>
           <p><strong>First Name:</strong> {currentUser.firstname}</p>
           <p><strong>Last Name:</strong> {currentUser.lastname}</p>
           <p><strong>Email:</strong> {currentUser.email}</p>
           <p><strong>Status: </strong>{currentUser.status}</p>
-          <button onClick={() => setEditing(true)}>Update Profile</button>
+          <button onClick={() => setEditing(true)} className="btn btn-primary btn-block btn-gradient">Update Profile</button>
         </div>
       )}
       {editing && (
-        <form onSubmit={handleUpdate}>
+        <form onSubmit={handleUpdate} className="profile-update-form">
           {error && <div>{error}</div>}
           <div>
-            <label htmlFor="firstName">First Name:</label>
+            <div className="form-group">
             <input
               type="text"
-              id="firstName"
+              id="name-input"
+              className="form-control"
+              placeholder="Firstname"
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
             />
           </div>
-          <div>
-            <label htmlFor="lastName">Last Name:</label>
+            <div className="form-group">
             <input
               type="text"
-              id="lastName"
+              id="name-input"
+              className="form-control"
+              placeholder="Lastname"
               value={lastName}
               onChange={(e) => setLastName(e.target.value)}
             />
           </div>
-          <div>
-            <label htmlFor="status">Status:</label>
+          <div className="dropdown">
+            <label htmlFor="status" className="dropdown-value">Status:</label>
             <select
               id="status"
               value={status}
@@ -83,10 +94,17 @@ const Profile = () => {
               <option value="online">Online</option>
             </select>
           </div>
-          <button type="submit">Save Changes</button>
-          <button onClick={() => setEditing(false)}>Cancel</button>
+            <div className="profile-update-buttons">
+          <button type="submit" className="btn btn-primary btn-block btn-gradient" id="profile-update-submit">Save Changes</button>
+          <button onClick={() => setEditing(false)} className="btn btn-primary btn-block btn-gradient-2">Cancel</button>
+            </div>
+          </div>
         </form>
+
       )}
+    </div>
+        </div>
+      </div>
     </div>
   );
 };
