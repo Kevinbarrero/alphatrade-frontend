@@ -14,6 +14,7 @@ function ChartComponent({
   const chartContainer = useRef(null);
   const candlestickSeriesRef = useRef(null);
   const areaSeriesRef = useRef(null);
+  const lineSeriesRef = useRef(null);
   const socketRef = useRef(null);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -21,7 +22,7 @@ function ChartComponent({
     const chart = createChart(chartContainer.current, {
       timeScale: {
         timeVisible: true,
-        secondsVisible: false,
+        secondsVisible: true,
       },
       priceScale: {
         autoScale: true,
@@ -80,21 +81,28 @@ function ChartComponent({
         profit: [],
       },
     };
+    lineSeriesRef.current = chart.addLineSeries();
 
     async function fetchData() {
       try {
         const response = await axios.get(
-          `http://158.160.12.75:3000/klines/${coin.toUpperCase()}/${klinetime}/1682056800000`
+          `http://62.109.16.15:3000/klines/${coin.toUpperCase()}/${klinetime}/1682056800000`
         );
         const data = response.data;
         let transformedData = data.map((obj) => ({
-          time: (new Date(obj.open_time).getTime() + 10800000) / 1000,
+          time: (new Date(obj.open_time).getTime() + 10800000 * 2) / 1000,
           open: parseFloat(obj.open),
           high: parseFloat(obj.high),
           low: parseFloat(obj.low),
           close: parseFloat(obj.close),
         }));
         candlestickSeriesRef.current.setData(transformedData);
+        const currentTime = Date.now() + 10800000 / 1000;
+        lineSeriesRef.current.setData([
+          { time: currentTime + 300, value: 27606 },
+          { time: currentTime + 600, value: 27800 },
+          { time: currentTime + 900, value: 27300 },
+        ]);
         let lineData = transformedData.map((datapoint) => ({
           time: datapoint.time,
           value: (datapoint.close + datapoint.open) / 2,
@@ -118,8 +126,6 @@ function ChartComponent({
             indicatorsDict,
             transformedData
           );
-          console.log("indicatorsDict", indicatorsDict);
-          console.log(buyPoints);
           //only unique values for sellpoints and buypoints
           if (
             (buyPoints.filter(
@@ -203,6 +209,7 @@ function ChartComponent({
           onBacktestDataChange(orders);
         }
         areaSeriesRef.current.setData(lineData);
+        chart.timeScale().fitContent();
         setIsLoading(false);
       } catch (error) {
         console.log(error);
@@ -225,12 +232,14 @@ function ChartComponent({
           low: parseFloat(candlestick.l),
           close: parseFloat(candlestick.c),
         };
-        candlestickSeriesRef.current.update(kline);
-        const areaData = {
-          time: kline.time,
-          value: (kline.open + kline.close) / 2,
-        };
-        areaSeriesRef.current.update(areaData);
+        try {
+          candlestickSeriesRef.current.update(kline);
+          const areaData = {
+            time: kline.time,
+            value: (kline.open + kline.close) / 2,
+          };
+          areaSeriesRef.current.update(areaData);
+        } catch (error) {}
       }
     };
 
