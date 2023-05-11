@@ -82,7 +82,7 @@ const Profile = () => {
               onChange={(e) => setLastName(e.target.value)}
             />
           </div>
-          <div className="dropdown">
+          <div className="dropdown" id="status-dropdown">
             <label htmlFor="status" className="dropdown-value">Status:</label>
             <select
               id="status"
