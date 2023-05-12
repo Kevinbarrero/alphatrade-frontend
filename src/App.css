@@ -75,7 +75,7 @@ label {
 }
 
 .form-group {
-    padding: 15px;
+    padding: 5px;
 
 }
 
@@ -116,7 +116,6 @@ label {
     font-size: 12px;
     line-height: 35px;
     letter-spacing: 0.12em;
-    padding-top: 1%;
     padding-left: 26%;
 }
 
@@ -196,7 +195,7 @@ label {
 #btn-logout{
     position: absolute;
     right: 2%;
-    top: 15%
+    top: 20%
 }
 
 #btn-login-main{
@@ -252,4 +251,16 @@ label {
 
 #profile-update-submit{
     margin-right: 5%;
+}
+
+.alert.alert-danger{
+    font-size: 10px;
+    line-height: 1px;
+    height: 30px;
+    width: 330px;
+    margin: 0;
+}
+
+#status-dropdown{
+    margin-left: 1% !important;
 }
