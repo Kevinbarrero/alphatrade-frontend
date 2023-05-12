@@ -18,6 +18,7 @@ function SearchInput({ onSearchResultChange, onSearchIntervalChange }) {
   }, []);
 
   const handleInputChange = (selectedOption) => {
+    if (!selectedOption) return;
     setSearchTerm(selectedOption.value);
     setSearchResult(selectedOption.value);
     if (onSearchResultChange) {
@@ -26,6 +27,7 @@ function SearchInput({ onSearchResultChange, onSearchIntervalChange }) {
   };
 
   const handleIntervalChange = (selectedOption) => {
+    if (!selectedOption) return;
     if (onSearchIntervalChange) {
       onSearchIntervalChange(selectedOption.value);
     }

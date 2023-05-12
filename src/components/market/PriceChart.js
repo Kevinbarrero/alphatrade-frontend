@@ -22,7 +22,7 @@ function ChartComponent({
     const chart = createChart(chartContainer.current, {
       timeScale: {
         timeVisible: true,
-        secondsVisible: true,
+        secondsVisible: false,
       },
       priceScale: {
         autoScale: true,
@@ -86,10 +86,10 @@ function ChartComponent({
     async function fetchData() {
       try {
         const response = await axios.get(
-          `http://62.109.16.15:3000/klines/${coin.toUpperCase()}/${klinetime}/1682056800000`
+          `http://localhost:3000/klines/${coin.toUpperCase()}/${klinetime}/1682056800000`
         );
         const data = response.data;
-        let transformedData = data.map((obj) => ({
+        const transformedData = data.map((obj) => ({
           time: (new Date(obj.open_time).getTime() + 10800000 * 2) / 1000,
           open: parseFloat(obj.open),
           high: parseFloat(obj.high),
@@ -97,12 +97,19 @@ function ChartComponent({
           close: parseFloat(obj.close),
         }));
         candlestickSeriesRef.current.setData(transformedData);
-        const currentTime = Date.now() + 10800000 / 1000;
-        lineSeriesRef.current.setData([
-          { time: currentTime + 300, value: 27606 },
-          { time: currentTime + 600, value: 27800 },
-          { time: currentTime + 900, value: 27300 },
-        ]);
+        const currentTime =
+          transformedData[transformedData.length - 1].time * 1000;
+        const prediction = await axios.get(
+          `http://localhost:8000/model/${coin.toLowerCase()}`
+        );
+        const data_pred = prediction.data.pred;
+        const result = data_pred.map((value, index) => {
+          return {
+            time: (currentTime + (index + 1) * 60000) / 1000, // Add 1 minute for each index
+            value: value,
+          };
+        });
+        lineSeriesRef.current.setData(result);
         let lineData = transformedData.map((datapoint) => ({
           time: datapoint.time,
           value: (datapoint.close + datapoint.open) / 2,
