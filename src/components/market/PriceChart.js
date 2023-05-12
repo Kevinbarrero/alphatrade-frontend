@@ -86,7 +86,7 @@ function ChartComponent({
     async function fetchData() {
       try {
         const response = await axios.get(
-          `http://localhost:3000/klines/${coin.toUpperCase()}/${klinetime}/1682056800000`
+          `http://62.109.16.15:3000/klines/${coin.toUpperCase()}/${klinetime}/1682056800000`
         );
         const data = response.data;
         const transformedData = data.map((obj) => ({
@@ -100,7 +100,7 @@ function ChartComponent({
         const currentTime =
           transformedData[transformedData.length - 1].time * 1000;
         const prediction = await axios.get(
-          `http://localhost:8000/model/${coin.toLowerCase()}`
+          `http://62.109.16.15:8000/model/${coin.toLowerCase()}`
         );
         const data_pred = prediction.data.pred;
         const result = data_pred.map((value, index) => {
