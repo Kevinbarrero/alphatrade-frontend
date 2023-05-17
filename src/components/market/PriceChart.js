@@ -100,7 +100,7 @@ function ChartComponent({
         const currentTime =
           transformedData[transformedData.length - 1].time * 1000;
         const prediction = await axios.get(
-          `http://62.109.16.15:8000/model/${coin.toLowerCase()}`
+          `http://localhost:8000/model/${coin.toLowerCase()}`
         );
         const data_pred = prediction.data.pred;
         const result = data_pred.map((value, index) => {
