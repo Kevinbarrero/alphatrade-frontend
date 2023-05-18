@@ -1,3 +1,7 @@
+body{
+    overflow-x: hidden;
+}
+
 label {
     display: block;
     margin-top: 10px;
@@ -7,7 +11,7 @@ label {
     width: 470px;
     height: 525px;
     background: #FFFFFF;
-    box-shadow: 0px 4px 24px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.25);
     border-radius: 40px;
 }
 
@@ -24,7 +28,7 @@ label {
 
 .login-image-block {
     background: linear-gradient(204.28deg, #F5EBEF 14.76%, rgba(151, 139, 234, 0.5) 97.11%);
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(12px);
     border-radius: 40px;
 }
@@ -57,8 +61,8 @@ label {
 @media (max-width: 767.98px) {
     .login-image-block,
     .login-form-block {
-        margin-left: 0px;
-        margin-right: 0px;
+        margin-left: 0;
+        margin-right: 0;
     }
 }
 
@@ -176,7 +180,7 @@ label {
     border-color: #810BB8;
     padding: 5px;
     border-width: 2px;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
     color: black;
     width: 111px;
@@ -264,3 +268,123 @@ label {
 #status-dropdown{
     margin-left: 1% !important;
 }
+
+.main-image-1{
+    margin-right: 0;
+}
+
+.container-main {
+    position: relative;
+}
+
+.image {
+    height: 500px;
+}
+
+.image1 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 1000px;
+}
+
+.image2 {
+    position: absolute;
+    top: 0;
+    left: 15%;
+    max-width: 100%;
+    height: 500px;
+}
+
+.image3 {
+    position: absolute;
+    top: 10%;
+}
+
+.container-home{
+    margin-left: 0 !important;
+    padding-left: 0 !important;
+    margin-right: 0 !important;
+    padding-right: 0 !important;
+}
+
+.vector1{
+    margin-bottom: 10%;
+    height: 450px;
+    width: 120%;
+}
+
+.main-text{
+    margin-left: 10%;
+    margin-top: 5%;
+}
+
+.mainPage-buttons{
+    margin-top: 5%;
+}
+
+#mainPage-start-btn{
+    margin-right: 5%;
+}
+div.div1, div.div2 {
+    position: absolute;
+    left: 0;
+    right: 0;
+    outline: solid 1px #ccc;
+    margin: 5px;
+}
+div.div1 {
+    height: 100px;
+    top: 0;
+}
+div.div2 {
+    top: 100px;
+    bottom: 0;
+}
+
+.main-description{
+    text-align: center;
+    padding-bottom: 5%;
+}
+
+.main-image-2 {
+    height: 500px;
+}
+
+.image-second-1 {
+    position: absolute;
+    left: 0;
+    width: 1000px;
+    height: 550px;
+}
+
+.image-second-2{
+    position: absolute;
+    left: 15%;
+    max-width: 100%;
+    height: 500px;
+}
+
+.image-second-3{
+    position: absolute;
+    left: 0;
+    width: 1000px;
+}
+
+.main-text1{
+    display:inline-block;
+    float: left;
+    padding-top: 5%;
+}
+
+.main-text-img{
+    display:block;
+    float: left;
+    padding-right: 5%;
+}
+
+.indicators{
+    height: 130px;
+    width: 130px;
+}
+
