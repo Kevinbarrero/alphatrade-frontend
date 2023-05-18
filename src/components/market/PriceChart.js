@@ -97,19 +97,19 @@ function ChartComponent({
           close: parseFloat(obj.close),
         }));
         candlestickSeriesRef.current.setData(transformedData);
-        const currentTime =
-          transformedData[transformedData.length - 1].time * 1000;
-        const prediction = await axios.get(
-          `http://localhost:8000/model/${coin.toLowerCase()}`
-        );
-        const data_pred = prediction.data.pred;
-        const result = data_pred.map((value, index) => {
-          return {
-            time: (currentTime + (index + 1) * 60000) / 1000, // Add 1 minute for each index
-            value: value,
-          };
-        });
-        lineSeriesRef.current.setData(result);
+        // const currentTime =
+        //   transformedData[transformedData.length - 1].time * 1000;
+        // const prediction = await axios.get(
+        //   `http://localhost:8000/model/${coin.toLowerCase()}`
+        // );
+        // const data_pred = prediction.data.pred;
+        // const result = data_pred.map((value, index) => {
+        //   return {
+        //     time: (currentTime + (index + 1) * 60000) / 1000, // Add 1 minute for each index
+        //     value: value,
+        //   };
+        // });
+        // lineSeriesRef.current.setData(result);
         let lineData = transformedData.map((datapoint) => ({
           time: datapoint.time,
           value: (datapoint.close + datapoint.open) / 2,
@@ -246,7 +246,7 @@ function ChartComponent({
             value: (kline.open + kline.close) / 2,
           };
           areaSeriesRef.current.update(areaData);
-        } catch (error) {}
+        } catch (error) { }
       }
     };
 

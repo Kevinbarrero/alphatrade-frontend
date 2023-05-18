@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { postStrategy } from "../../services/user.service";
 
 function StrategyConfig({ onSave, onStrategiesChange }) {
   const [name, setName] = useState("");
+  const [ind1, setInd1] = useState("");
+  const [ind2, setInd2] = useState("");
+  const [cond, setCond] = useState("");
+  const [tempIndex, setTempIndex] = useState(null);
   const [indicators, setIndicators] = useState([]);
   const [buyConditions, setBuyConditions] = useState([]);
   const [sellConditions, setSellConditions] = useState([]);
+  const [conditionType, setConditionType] = useState();
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -16,6 +21,8 @@ function StrategyConfig({ onSave, onStrategiesChange }) {
     const updatedIndicators = [...indicators];
     updatedIndicators[index][event.target.name] = event.target.value;
     setIndicators(updatedIndicators);
+    // console.log(updatedIndicators);
+    // setAllConditions()
   };
 
   const handleIndicatorValueChange = (index, event) => {
@@ -33,13 +40,23 @@ function StrategyConfig({ onSave, onStrategiesChange }) {
     updatedIndicators.splice(index, 1);
     setIndicators(updatedIndicators);
   };
-
-  const handleBuyConditionChange = (index, event) => {
+  const handleInd1Change = (event) => {
+    setInd1(event.target.value);
+  };
+  const handleInd2Change = (event) => {
+    setInd2(event.target.value);
+  };
+  const handleCondChange = (event) => {
+    setCond(event.target.value);
+  };
+  const handleBuyConditionChange = (index, ind1, cond, ind2) => {
     const updatedBuyConditions = [...buyConditions];
-    updatedBuyConditions[index] = event.target.value;
+    const conditionString = ind1 + cond + ind2;
+
+    updatedBuyConditions[index] = conditionString;
+    console.log(updatedBuyConditions);
     setBuyConditions(updatedBuyConditions);
   };
-
   const handleAddBuyCondition = () => {
     setBuyConditions([...buyConditions, ""]);
   };
@@ -65,11 +82,25 @@ function StrategyConfig({ onSave, onStrategiesChange }) {
     updatedSellConditions.splice(index, 1);
     setSellConditions(updatedSellConditions);
   };
+  useEffect(() => {
+    if (conditionType === "Buy") {
+      const updatedBuyConditions = [...buyConditions];
+      const conditionString = ind1 + cond + ind2;
+      updatedBuyConditions[tempIndex] = conditionString;
+      setBuyConditions(updatedBuyConditions);
+    }
+    if (conditionType === "Sell") {
+      const updatedSellConditions = [...sellConditions];
+      const conditionString = ind1 + cond + ind2;
+      updatedSellConditions[tempIndex] = conditionString;
+      setSellConditions(updatedSellConditions);
+    }
+  }, [ind1, cond, ind2, tempIndex, conditionType]);
 
   const handleSave = () => {
     if (!name || !indicators || !buyConditions || !sellConditions) {
       alert("Please fill out all fields");
-      console.log(name, indicators, buyConditions, sellConditions);
+      // console.log(name, indicators, buyConditions, sellConditions);
       return;
     }
     const strategyConfig = {
@@ -147,22 +178,63 @@ function StrategyConfig({ onSave, onStrategiesChange }) {
         </Form.Group>
 
         <Form.Group>
-          <h6>
-            {" "}
-            please add the conditions with this format: ma70{">"}ma30, or rsi
-            {">"}80
-          </h6>
           <Form.Label>Buy Conditions:</Form.Label>
           {buyConditions.map((condition, index) => (
             <div key={index}>
-              <Form.Group>
+              <Form.Group onChange={() => setConditionType("Buy")}>
                 <Form.Label>Buy Condition {index + 1}:</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={condition}
-                  onChange={(event) => handleBuyConditionChange(index, event)}
-                  style={{ width: "90%" }}
-                />
+                <Form.Group onChange={() => setTempIndex(index)}>
+                  <Form.Label>Indicator:</Form.Label>
+                  <Form.Control
+                    as="select"
+                    name="ind1"
+                    onChange={(event) => handleInd1Change(event)}
+                  >
+                    <option value="">Select The First Indicator</option>
+                    {indicators.map((indicator, index) => (
+                      <option
+                        key={indicator.id}
+                        value={
+                          indicator.id !== ""
+                            ? indicator.id + indicator.value
+                            : ""
+                        }
+                      >
+                        {indicator.id} {indicator.value}
+                      </option>
+                    ))}
+                  </Form.Control>
+                  <Form.Control
+                    as="select"
+                    name="cond"
+                    onChange={(event) => handleCondChange(event)}
+                  >
+                    <option value="">Select The Condition</option>
+                    <option value=">">Greater Than</option>
+                    <option value=">=">Greater Than Or Equal</option>
+                    <option value="<">Less Than</option>
+                    <option value="<=">Less Than Or Equal</option>
+                  </Form.Control>
+                  <Form.Control
+                    as="select"
+                    name="ind2"
+                    onChange={(event) => handleInd2Change(event)}
+                  >
+                    <option value="">Select The Second Indicator</option>
+                    {indicators.map((indicator, index) => (
+                      <option
+                        key={indicator.id}
+                        value={
+                          indicator.id !== ""
+                            ? indicator.id + indicator.value
+                            : ""
+                        }
+                      >
+                        {indicator.id} {indicator.value}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
               </Form.Group>
               <Button
                 variant="danger"
@@ -181,14 +253,60 @@ function StrategyConfig({ onSave, onStrategiesChange }) {
           <Form.Label>Sell Conditions:</Form.Label>
           {sellConditions.map((condition, index) => (
             <div key={index}>
-              <Form.Group>
-                <Form.Label>Sell Condition {index + 1}:</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={condition}
-                  onChange={(event) => handleSellConditionChange(index, event)}
-                  style={{ width: "90%" }}
-                />
+              <Form.Group onChange={() => setConditionType("Sell")}>
+                <Form.Label>Buy Condition {index + 1}:</Form.Label>
+                <Form.Group onChange={() => setTempIndex(index)}>
+                  <Form.Label>Indicator:</Form.Label>
+                  <Form.Control
+                    as="select"
+                    name="ind1"
+                    onChange={(event) => handleInd1Change(event)}
+                  >
+                    <option value="">Select The First Indicator</option>
+                    {indicators.map((indicator, index) => (
+                      <option
+                        key={indicator.id}
+                        value={
+                          indicator.id !== ""
+                            ? indicator.id + indicator.value
+                            : ""
+                        }
+                      >
+                        {indicator.id} {indicator.value}
+                      </option>
+                    ))}
+                  </Form.Control>
+                  <Form.Control
+                    as="select"
+                    name="cond"
+                    onChange={(event) => handleCondChange(event)}
+                  >
+                    <option value="">Select The Condition</option>
+                    <option value=">">Greater Than</option>
+                    <option value=">=">Greater Than Or Equal</option>
+                    <option value="<">Less Than</option>
+                    <option value="<=">Less Than Or Equal</option>
+                  </Form.Control>
+                  <Form.Control
+                    as="select"
+                    name="ind2"
+                    onChange={(event) => handleInd2Change(event)}
+                  >
+                    <option value="">Select The Second Indicator</option>
+                    {indicators.map((indicator, index) => (
+                      <option
+                        key={indicator.id}
+                        value={
+                          indicator.id !== ""
+                            ? indicator.id + indicator.value
+                            : ""
+                        }
+                      >
+                        {indicator.id} {indicator.value}
+                      </option>
+                    ))}
+                  </Form.Control>
+                </Form.Group>
               </Form.Group>
               <Button
                 variant="danger"
