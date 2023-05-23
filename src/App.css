@@ -167,7 +167,16 @@ label {
     align-items: center;
     text-align: center;
     text-transform: capitalize;
-    color: #000000;
+    color: black;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    background-image: linear-gradient(to right, #8A2BE2, #00BFFF);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: background-position 0.3s ease;
 }
 
 .navbar-nav.mr-auto.nav-links{
@@ -211,7 +220,7 @@ label {
 #btn-sign-up-main{
     position: absolute;
     right: 2%;
-    top: 15%
+    top: 15%;
 }
 
 #link-text{
@@ -326,6 +335,44 @@ label {
 #mainPage-start-btn{
     margin-right: 5%;
 }
+
+#mainPage-start-btn:hover{
+    background-image: linear-gradient(to right, #FFA500, #8A2BE2);
+
+}
+
+#mainPage-learn-more-btn{
+
+}
+
+#mainPage-learn-more-btn:hover{
+    background-image: linear-gradient(to bottom, black, #8A2BE2);
+    color: white;
+}
+
+#back-test-but{
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 20px;
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    color: white;
+    background-image: linear-gradient(to right, #8A2BE2, #4B0082);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+#back-test-but:hover{
+    background-image: linear-gradient(to right, #4B0082, #8A2BE2);
+}
+#back-test-but:focus{
+    outline: none;
+}
+#back-test-but:active{
+    transform: translateY(1px);
+}
+
+
+
 div.div1, div.div2 {
     position: absolute;
     left: 0;
@@ -390,4 +437,71 @@ div.div2 {
 
 #electric{
     margin-top: 20%;
+}
+
+#create-strat-but{
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 20px;
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    color: white;
+    background-image: linear-gradient(to right, #8A2BE2, #00BFFF);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+}
+
+#create-strat-but:hover {
+    background-image: linear-gradient(to right, #00BFFF, #8A2BE2);
+}
+
+#create-strat-but:focus {
+    outline: none;
+}
+
+#create-strat-but:active {
+    transform: translateY(1px);
+}
+
+
+
+
+#strat-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px;
+    overflow: hidden;
+    
+}
+
+#strat-table th,
+#strat-table td {
+    padding: 10px;
+    text-align: center;
+}
+
+#strat-table th {
+    background-color: #8A2BE2;
+    color: white;
+}
+
+#strat-table td {
+    background-color: #FFFFFF;
+    color: #333333;
+}
+
+#strat-table tr:nth-child(even) td {
+    background-color: #F0F0F0;
+}
+
+#strat-table th:first-child,
+#strat-table td:first-child {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+#strat-table th:last-child,
+#strat-table td:last-child {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }

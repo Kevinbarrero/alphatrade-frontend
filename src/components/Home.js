@@ -17,7 +17,7 @@ const Home = () => {
                         <span>Create new trading strategies, test them in real time and with past data</span>
                         <div className="mainPage-buttons">
                             <Link to={"/register"}  className="btn btn-primary btn-block btn-gradient" id="mainPage-start-btn">Get started</Link>
-                        <a href="#main-learn-more" className="btn btn-primary btn-block btn-gradient-2">Learn more</a>
+                        <a href="#main-learn-more" className="btn btn-primary btn-block btn-gradient-2" id="mainPage-learn-more-btn">Learn more</a>
                         </div>
                     </div>
                     <div className="col-sm main-image-1">

@@ -47,7 +47,7 @@ const Strategies = () => {
       <div className="row">
         <div className="col-md-2 bg-light mr-4" style={{ height: "100vh" }}>
           {!isFormOpen && (
-            <button onClick={() => setIsFormOpen(true)}>
+            <button id="create-strat-but" onClick={() => setIsFormOpen(true)}>
               Create new strategy
             </button>
           )}

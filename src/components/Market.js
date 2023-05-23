@@ -111,7 +111,7 @@ const Market = () => {
         >
           <h3>Strategies</h3>
           {strategies.length !== 0 && (
-            <Table striped bordered hover>
+            <Table striped bordered hover id="strat-table">
               <thead className="thead-dark">
                 <tr>
                   <th>Name</th>
@@ -123,7 +123,7 @@ const Market = () => {
                   <tr key={index}>
                     <td>{strategy.name}</td>
                     <td>
-                      <button onClick={() => handleStrategyBacktest(strategy)}>
+                      <button onClick={() => handleStrategyBacktest(strategy)} id="back-test-but">
                         Run Backtest
                       </button>
                     </td>

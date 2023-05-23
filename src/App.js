@@ -64,7 +64,7 @@ const App = () => {
           <div className="navbar-nav ml-auto">
             <li className="nav-item">
               <div className="form-group" id="btn-logout">
-                <a href="/login" className="btn btn-primary btn-block btn-gradient-2" onClick={logOut}>Log Out</a>
+                <a href="/login" className="btn btn-primary btn-block btn-gradient-2" id="mainPage-learn-more-btn" onClick={logOut}>Log Out</a>
               </div>
             </li>
           </div>
