@@ -45,7 +45,7 @@ const Home = () => {
                     <div class="col-sm main-images-text">
                         <div className="main-text1">
                             <span className="main-text-img">
-                            <img src="../images/Electric.png"/>
+                            <img id="electric" src="../images/Electric.png"/>
                             </span>
                             <span className="main-text-block">
                             <h6>Trading Candle</h6>
