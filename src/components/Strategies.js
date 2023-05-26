@@ -61,6 +61,7 @@ const Strategies = () => {
                 onClick={() => setIsFormOpen(false)}
                 type="button"
                 className="btn btn-warning"
+                id="strat-cancel-but"
               >
                 Cancel
               </button>
@@ -100,7 +101,7 @@ const Strategies = () => {
                     ))}
                   </td>
                   <td>
-                    <button onClick={() => handleDeleteStrategy(index)}>
+                    <button  id="delete-strat-but" onClick={() => handleDeleteStrategy(index)}>
                       Delete
                     </button>
                   </td>

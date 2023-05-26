@@ -505,3 +505,71 @@ div.div2 {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
+
+#delete-strat-but{
+    background: linear-gradient(to right, #000000, #666666);
+    border-radius: 5px;
+    color: #ffffff;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease;
+}
+
+#delete-strat-but:hover{
+    background: linear-gradient(to right, #999999, #666666);
+    color: #ffffff;
+}
+
+#add-ind-but{
+    background: linear-gradient(to right, #00bfff, darkblue);
+    border-radius: 5px;
+    color: #ffffff;
+}
+
+#add-ind-but:hover{
+    background-color: #ffffff;
+    color: black;
+}
+
+#strat-save-button{
+    background: linear-gradient(to right, green, black);
+    border-radius: 5px;
+    color: #ffffff;
+}
+
+#strat-save-button:hover{
+    background-color: #ffffff;
+    color: green;
+}
+
+#strat-save-button{
+    background: linear-gradient(to right, green, darkslategrey);
+    border-radius: 5px;
+    color: #ffffff;
+}
+
+#strat-save-button:hover{
+    background-color: #ffffff;
+    color: green;
+}
+
+#strat-cancel-but{
+    background: linear-gradient(to right, yellow, darkgoldenrod);
+    border-radius: 5px;
+    color: #ffffff;
+}
+
+#strat-cancel-but:hover{
+    background-color: #ffffff;
+    color: yellow;
+}
+
+#remove-strat-but{
+    background: linear-gradient(to right, red, darkred);
+    border-radius: 5px;
+    color: #ffffff;
+}
+
+#remove-strat-but:hover{
+    background-color: #ffffff;
+    color: black;
+}

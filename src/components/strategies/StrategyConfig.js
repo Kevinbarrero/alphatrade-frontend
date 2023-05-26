@@ -165,6 +165,7 @@ function StrategyConfig({ onSave, onStrategiesChange }) {
                 />
               </Form.Group>
               <Button
+                  id = "remove-strat-but"
                 variant="danger"
                 onClick={() => handleRemoveIndicator(index)}
               >
@@ -172,7 +173,7 @@ function StrategyConfig({ onSave, onStrategiesChange }) {
               </Button>
             </div>
           ))}
-          <Button variant="primary" onClick={handleAddIndicator}>
+          <Button id="add-ind-but" variant="primary" onClick={handleAddIndicator}>
             Add Indicator
           </Button>
         </Form.Group>
@@ -244,7 +245,7 @@ function StrategyConfig({ onSave, onStrategiesChange }) {
               </Button>
             </div>
           ))}
-          <Button variant="primary" onClick={handleAddBuyCondition}>
+          <Button id="add-ind-but" variant="primary" onClick={handleAddBuyCondition}>
             Add Buy Condition
           </Button>
         </Form.Group>
@@ -309,6 +310,7 @@ function StrategyConfig({ onSave, onStrategiesChange }) {
                 </Form.Group>
               </Form.Group>
               <Button
+                  id="remove-strat-but"
                 variant="danger"
                 onClick={() => handleRemoveSellCondition(index)}
               >
@@ -316,12 +318,12 @@ function StrategyConfig({ onSave, onStrategiesChange }) {
               </Button>
             </div>
           ))}
-          <Button variant="primary" onClick={handleAddSellCondition}>
+          <Button id="add-ind-but" variant="primary" onClick={handleAddSellCondition}>
             Add Sell Condition
           </Button>
         </Form.Group>
 
-        <Button variant="success" onClick={handleSave}>
+        <Button id="strat-save-button" variant="success" onClick={handleSave}>
           Save
         </Button>
       </Form>
