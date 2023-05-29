@@ -103,10 +103,10 @@ const Market = () => {
     console.log("orders data: ", backtest);
   };
   return (
-    <div className="container-fluid">
+    <div className="container-fluid market">
       <div className="row">
         <div
-          className="col-md-2 bg-light mr-4"
+          className="col-md-2 mr-4"
           style={{ height: "100vh", marginTop: 174 }}
         >
           <h3>Strategies</h3>

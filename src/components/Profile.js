@@ -55,7 +55,7 @@ const Profile = () => {
           <p><strong>Last Name:</strong> {currentUser.lastname}</p>
           <p><strong>Email:</strong> {currentUser.email}</p>
           <p><strong>Status: </strong>{currentUser.status}</p>
-          <button onClick={() => setEditing(true)} className="btn btn-primary btn-block btn-gradient">Update Profile</button>
+          <button onClick={() => setEditing(true)} className="btn btn-primary btn-block btn-gradient">Update</button>
         </div>
       )}
       {editing && (
@@ -95,7 +95,7 @@ const Profile = () => {
             </select>
           </div>
             <div className="profile-update-buttons">
-          <button type="submit" className="btn btn-primary btn-block btn-gradient" id="profile-update-submit">Save Changes</button>
+          <button type="submit" className="btn btn-primary btn-block btn-gradient" id="profile-update-submit">Save</button>
           <button onClick={() => setEditing(false)} className="btn btn-primary btn-block btn-gradient-2">Cancel</button>
             </div>
           </div>
