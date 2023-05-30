@@ -14,6 +14,8 @@ import Market from "./components/Market";
 
 import { logout } from "./actions/auth";
 import { clearMessage } from "./actions/message";
+import {Button, ButtonGroup} from "react-bootstrap";
+import {useTheme} from "./useTheme";
 
 
 const App = () => {
@@ -22,6 +24,14 @@ const App = () => {
 
   let location = useLocation();
 
+  const { theme, setTheme } = useTheme()
+
+  const handleLightThemeClick = () => {
+    setTheme('light')
+  }
+  const handleDarkThemeClick = () => {
+    setTheme('dark')
+  }
   useEffect(() => {
     if (["/login", "/register"].includes(location.pathname)) {
       dispatch(clearMessage());
@@ -38,6 +48,14 @@ const App = () => {
         <Link to={"/"} className="navbar-brand" id="logo-text">
           AlphaTrade
         </Link>
+        <ButtonGroup className="theme-btn" aria-label="Theme toggle">
+          <Button className="light" variant="secondary" onClick={handleLightThemeClick}>
+            Light
+          </Button>
+          <Button className="dark" variant="secondary" onClick={handleDarkThemeClick}>
+            Dark
+          </Button>
+        </ButtonGroup>
         <div className="navbar-nav mr-auto nav-links">
           {currentUser && (
             <>
@@ -59,7 +77,6 @@ const App = () => {
             </>
           )}
         </div>
-
         {currentUser ? (
           <div className="navbar-nav ml-auto">
             <li className="nav-item">

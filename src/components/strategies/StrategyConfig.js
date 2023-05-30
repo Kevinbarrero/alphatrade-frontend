@@ -124,7 +124,7 @@ function StrategyConfig({ onSave, onStrategiesChange }) {
             type="text"
             value={name}
             onChange={handleNameChange}
-            style={{ width: "90%" }}
+            className="strat-name-input"
           />
         </Form.Group>
 
@@ -139,7 +139,7 @@ function StrategyConfig({ onSave, onStrategiesChange }) {
                   name="id"
                   value={indicator.id}
                   onChange={(event) => handleIndicatorChange(index, event)}
-                  style={{ width: "90%" }}
+                  className="strat-name-input"
                 >
                   <option value="">Select an indicator</option>
                   <option value="ma">Moving Average</option>
@@ -154,6 +154,7 @@ function StrategyConfig({ onSave, onStrategiesChange }) {
                   type="text"
                   value={indicator.value}
                   onChange={(event) => handleIndicatorValueChange(index, event)}
+                  className="strat-name-input"
                   onKeyPress={(event) => {
                     // Only allow numeric characters (0-9) and the period (.) character
                     const regex = /[0-9.]/;
@@ -161,11 +162,9 @@ function StrategyConfig({ onSave, onStrategiesChange }) {
                       event.preventDefault();
                     }
                   }}
-                  style={{ width: "90%" }}
                 />
               </Form.Group>
-              <Button
-                  id = "remove-strat-but"
+              <Button className="remove-strat-but"
                 variant="danger"
                 onClick={() => handleRemoveIndicator(index)}
               >
@@ -239,6 +238,7 @@ function StrategyConfig({ onSave, onStrategiesChange }) {
               </Form.Group>
               <Button
                 variant="danger"
+                className="remove-strat-but"
                 onClick={() => handleRemoveBuyCondition(index)}
               >
                 Remove
@@ -261,6 +261,7 @@ function StrategyConfig({ onSave, onStrategiesChange }) {
                   <Form.Control
                     as="select"
                     name="ind1"
+                    className="ind-input"
                     onChange={(event) => handleInd1Change(event)}
                   >
                     <option value="">Select The First Indicator</option>
@@ -280,6 +281,7 @@ function StrategyConfig({ onSave, onStrategiesChange }) {
                   <Form.Control
                     as="select"
                     name="cond"
+                    className="ind-input"
                     onChange={(event) => handleCondChange(event)}
                   >
                     <option value="">Select The Condition</option>
@@ -291,6 +293,7 @@ function StrategyConfig({ onSave, onStrategiesChange }) {
                   <Form.Control
                     as="select"
                     name="ind2"
+                    className="ind-input"
                     onChange={(event) => handleInd2Change(event)}
                   >
                     <option value="">Select The Second Indicator</option>
@@ -310,7 +313,7 @@ function StrategyConfig({ onSave, onStrategiesChange }) {
                 </Form.Group>
               </Form.Group>
               <Button
-                  id="remove-strat-but"
+                  className="remove-strat-but"
                 variant="danger"
                 onClick={() => handleRemoveSellCondition(index)}
               >

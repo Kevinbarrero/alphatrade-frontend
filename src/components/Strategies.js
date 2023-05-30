@@ -39,13 +39,13 @@ const Strategies = () => {
   }
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid strategies">
       <header className="jumbotron">
         <h3>Custom Strategies</h3>
 
       </header>
       <div className="row">
-        <div className="col-md-2 bg-light mr-4" style={{ height: "100vh" }}>
+        <div className="col-md-2 mr-4" style={{ height: "100vh" }}>
           {!isFormOpen && (
             <button id="create-strat-but" onClick={() => setIsFormOpen(true)}>
               Create new strategy

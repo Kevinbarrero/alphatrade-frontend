@@ -181,7 +181,7 @@ label {
 
 .navbar-nav.mr-auto.nav-links{
     position: relative;
-    left: 25%;
+    left: 15%;
 
 }
 .btn.btn-primary.btn-block.btn-gradient-2{
@@ -507,69 +507,175 @@ div.div2 {
 }
 
 #delete-strat-but{
-    background: linear-gradient(to right, #000000, #666666);
-    border-radius: 5px;
-    color: #ffffff;
-    padding: 10px 20px;
-    transition: background-color 0.3s ease;
-}
-
-#delete-strat-but:hover{
-    background: linear-gradient(to right, #999999, #666666);
-    color: #ffffff;
+    background-color: var(--background-color);
+    border-color: #810BB8;
+    padding: 5px;
+    border-width: 2px;
+    border-radius: 20px;
+    width: 111px;
+    height: 37px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    box-sizing: border-box;
 }
 
 #add-ind-but{
-    background: linear-gradient(to right, #00bfff, darkblue);
-    border-radius: 5px;
-    color: #ffffff;
+    background: none;
+    border-radius: 275px;
+    border-color: #BF698D;
+    width: 200px;
+    height: 37px;
+    margin-bottom: 10px;
 }
 
-#add-ind-but:hover{
-    background-color: #ffffff;
-    color: black;
-}
-
-#strat-save-button{
-    background: linear-gradient(to right, green, black);
-    border-radius: 5px;
-    color: #ffffff;
-}
-
-#strat-save-button:hover{
-    background-color: #ffffff;
-    color: green;
-}
 
 #strat-save-button{
-    background: linear-gradient(to right, green, darkslategrey);
-    border-radius: 5px;
-    color: #ffffff;
-}
-
-#strat-save-button:hover{
-    background-color: #ffffff;
-    color: green;
+    background: linear-gradient(269.22deg, #BF698D 9.61%, #8E3BA3 45.58%, rgba(97, 69, 137, 0.951505) 80.3%,
+    rgba(24, 41, 103, 0.89) 110.59%);
+    border-radius: 275px;
+    border-color: #BF698D;
+    width: 111px;
+    height: 37px;
 }
 
 #strat-cancel-but{
-    background: linear-gradient(to right, yellow, darkgoldenrod);
-    border-radius: 5px;
-    color: #ffffff;
+    background-color: rgba(174, 85, 123, 0.1);
+    border-color: #810BB8;
+    margin-top: 5%;
+    border-width: 2px;
+    border-radius: 20px;
+    width: 111px;
+    height: 37px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    box-sizing: border-box;
 }
 
-#strat-cancel-but:hover{
-    background-color: #ffffff;
-    color: yellow;
+.remove-strat-but{
+    background-color: rgba(174, 85, 123, 0.1);
+    border-color: #810BB8;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border-width: 2px;
+    border-radius: 20px;
+    width: 111px;
+    height: 37px;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    box-sizing: border-box;
 }
 
-#remove-strat-but{
-    background: linear-gradient(to right, red, darkred);
-    border-radius: 5px;
-    color: #ffffff;
+body {
+    background-color: var(--background-color);
+    transition: background-color 200ms linear;
 }
 
-#remove-strat-but:hover{
-    background-color: #ffffff;
-    color: black;
+.theme-btn{
+    height: 50px;
+    padding-top: 1%;
+}
+
+.light{
+    background-color:  #E0DFE0;
+    color: var(--text-color);
+    border:none;
+}
+
+.dark{
+    background-color: #141414;
+    color: var(--text-color);
+    border:none;
+}
+
+h1{
+    color: var(--text-color);
+}
+
+h2{
+    color: var(--text-color);
+}
+
+h3{
+    color: var(--text-color);
+}
+
+h4{
+    color: var(--text-color);
+}
+
+a{
+    color: var(--text-color) !important;
+}
+
+p{
+    color: var(--text-color) !important;
+}
+
+span{
+    color: var(--text-color);
+}
+
+label{
+    color: var(--text-color)!important;
+}
+
+.card.card-container{
+    background-color: var(--background-color);
+    box-shadow: var(--box-shadow);
+}
+
+.login-image-block{
+    background: var(--card-color);
+}
+
+#status{
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+button{
+    color: var(--text-color)!important;
+}
+
+td{
+    background-color: var(--background-color)!important;
+    border: none;
+    color: var(--text-color);
+}
+
+tr{
+    border: none;
+}
+
+th{
+    border: none;
+}
+
+.container-fluid.strategies{
+    padding-left: 4%;
+    margin-top: 2%;
+}
+
+.container-fluid.market{
+    padding-left: 4%;
+    margin-top: 2%;
+}
+
+.table.table-dark{
+    margin-left: 10%;
+}
+
+.strat-name-input{
+    background-color: var(--background-color);
+    width: 200px;
+    color: var(--text-color);
+}
+
+.ind-input{
+    background-color: var(--background-color);
+    width: 250px;
+    color: var(--text-color);
 }
